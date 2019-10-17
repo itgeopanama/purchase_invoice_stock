@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="vendor_bill_stock" model="ir.ui.view">
+            <field name="name">account.invoice.inv.purchase.vendorbill</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_supplier_form"/>
+            <field name="arch" type="xml">
+				<xpath expr="//group//group//field[@name='date_due']" position="after">
+					<field name="create_stock"/>
+				</xpath>
+				<xpath expr="//page[2]//field[@name='company_id']" position="after">
+                    <field name="picking_policy"/>
+                    <field name="picking_type_id"/>
+                    <field name="warehouse_id" options="{'no_create': True}" groups="stock.group_stock_multi_locations"/>
+                </xpath>
+				<xpath expr="//h1[1]" position="after">
+					<div class="oe_button_box" name="button_box">				
+						<button type="object" name="action_view_delivery" class="oe_stat_button" icon="fa-truck" attrs="{'invisible': [('delivery_count', '=', 0)]}" groups="base.group_user">
+							<field name="delivery_count" widget="statinfo" string="Receipts"/>
+						</button>
+					</div>
+				</xpath>
+            </field>
+        </record>
+    </data>
+</odoo>
